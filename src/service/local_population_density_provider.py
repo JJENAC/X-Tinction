@@ -4,6 +4,7 @@ from geopandas import GeoDataFrame, read_file, GeoSeries
 from pandas import Series
 from shapely.geometry import Point, box
 
+
 from src.domain.spi.population_density_provider import PopulationDensityProvider
 
 context = {"TOULOUSE":
