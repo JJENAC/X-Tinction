@@ -3,8 +3,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from src.service.population_service import PopulationDensityService
 
-# Default path to the VRT or TIF file
-DATA_PATH = os.getenv("DATA_PATH", "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.vrt")
+# Default path to the TIF file inside data folder
+DATA_PATH = os.getenv(
+    "DATA_PATH",
+    "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+)
+
 
 service = None
 

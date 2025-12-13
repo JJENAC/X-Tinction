@@ -1,7 +1,14 @@
 import rasterio
 from rasterio.windows import Window
-from rasterio.warp import transform
+#from rasterio.warp import transform
 import logging
+from src.service.coordinate_transformer import CoordinateTransformer
+
+"""
+Coordinate transformations between WGS84 input 
+and the dataset CRS are handled by CoordinateTransformer, 
+ensuring consistent projection handling and separation of concerns
+"""
 
 logger = logging.getLogger(__name__)
 
@@ -9,11 +16,13 @@ class PopulationDensityService:
     def __init__(self, data_path: str):
         self.data_path = data_path
         self.dataset = None
+        self.transformer = None
 
     def start(self):
         """Opens the raster dataset."""
         try:
             self.dataset = rasterio.open(self.data_path)
+            self.transformer = CoordinateTransformer(self.dataset.crs)
         except Exception as e:
             logger.error(f"Failed to open dataset {self.data_path}: {e}")
 
@@ -26,16 +35,12 @@ class PopulationDensityService:
         """
         Gets population density at the specified latitude and longitude.
         """
-        if not self.dataset:
+        if not self.dataset or not self.transformer:
             return -1.0
 
         try:
-            # Transform coordinates to dataset CRS (usually ESRI:54009)
-            src_crs = 'EPSG:4326'
-            dst_crs = self.dataset.crs
-            
-            xs, ys = transform(src_crs, dst_crs, [lon], [lat])
-            x, y = xs[0], ys[0]
+            # Transform coordinates 
+            x, y = self.transformer.to_dataset(lat, lon)
 
             # Get pixel coordinates
             row, col = self.dataset.index(x, y)
