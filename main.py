@@ -29,12 +29,6 @@ async def get_density(lat: float, lon: float):
     
     density = service.get_density(lat, lon)
     
-    # Note: The original requirement might have been to return people/km2.
-    # GHSL 100m gives people per cell (100x100m = 0.01 km2).
-    # So density per km2 = value * 100.
-    # Assuming the service returns the raw value, we might convert it here or return as is.
-    # Based on previous summary, it "converts raw count to people/km²".
-    
     density_per_km2 = density * 100
     
     return {

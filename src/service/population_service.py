@@ -4,11 +4,6 @@ from rasterio.windows import Window
 import logging
 from src.service.coordinate_transformer import CoordinateTransformer
 
-"""
-Coordinate transformations between WGS84 input 
-and the dataset CRS are handled by CoordinateTransformer, 
-ensuring consistent projection handling and separation of concerns
-"""
 
 logger = logging.getLogger(__name__)
 
