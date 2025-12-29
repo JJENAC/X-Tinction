@@ -88,3 +88,88 @@ curl "http://127.0.0.1:8000/density?lat=43.6045&lon=1.444"
 }
 ```
 *Note: The density returned is typically people per km² (check source code comments for specifics).*
+
+**Check service health:**
+Verify the service is running and dataset is loaded:
+```bash
+curl "http://127.0.0.1:8000/health"
+```
+**Expected Response:**
+```json
+{
+  "status": "healthy",
+  "service_initialized": true,
+  "dataset_path": "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif",
+  "dataset_crs": "ESRI:54009",
+  "dataset_bounds": {
+    "left": -18041000.0,
+    "bottom": -9000000.0,
+    "right": 18041000.0,
+    "top": 9000000.0
+  },
+  "dataset_shape": {
+    "height": 180000,
+    "width": 360820
+  }
+}
+```
+**Invalid Request Examples:**
+Invalid latitude (out of range):
+```bash
+curl "http://127.0.0.1:8000/density?lat=91&lon=0"
+```
+Missing parameters:
+```bash
+curl "http://127.0.0.1:8000/density"
+```
+
+**Running Tests:**
+The project also includes a comprehensive test suite for error handling.
+
+**Install Test Dependencies**
+```bash
+pip install pytest pytest-cov httpx
+```
+**Run All Tests:**
+```bash
+pytest tests/test_error_handling.py -v
+
+pytest tests/test_error_handling.py --cov=src --cov-report=html
+```
+Expected Result: 19 tests passing (100% success rate)
+
+**Error Handling**
+The API includes error handling with clear error messages:
+
+- **200 (Success):** Valid coordinates, returns population density
+- **400 (Bad Request):** Invalid coordinates or coordinates outside dataset coverage
+- **422 (Validation Error):** Missing parameters or wrong data type
+- **503 (Service Unavailable):** Dataset not loaded or service initialization failed
+
+**Troubleshooting**
+**Service Returns 503 Error:**  
+All requests return "Service not initialized"
+
+-Check if the dataset file exists in `data/geographic_data/`
+-Verify the file path matches the configuration
+-Check server logs for startup errors
+-Visit `/health` endpoint to see detailed status
+
+**Tests Fail with Import Errors:**  
+`ModuleNotFoundError` when running tests
+```bash
+pip install pytest httpx
+```
+**Invalid Coordinates Error:**  
+Getting out of bounds errors for valid coordinates
+- Visit `/health` endpoint to see dataset bounds
+- Ensure coordinates are within dataset coverage area
+- Check coordinates are in correct format (decimal degrees)
+
+**Python Command Not Found:**
+- On Windows, try `py` instead of `python`
+- On Linux/macOS, try `python3` instead of `python`
+
+
+
+
