@@ -1,4 +1,3 @@
 /data
 /venv
-/src/__pycache__
-/src/service/__pycache__
+__pycache__/
