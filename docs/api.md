@@ -168,3 +168,14 @@ pytest
 - Request caching and performance optimization
 - Authentication and access control
 - Deployment on cloud platforms
+
+----------------------------------------------------------
+## Authors:
+
+Lou-Anne Gasp
+Japjot Singh
+Laxmi Pandey
+Liana Chatterjee
+
+ENAC – IATSED24 Master Program
+In collaboration with Sopra Steria
