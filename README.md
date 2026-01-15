@@ -1,4 +1,4 @@
-PROJECT : Dynamic Population Density Service
+### PROJECT : Dynamic Population Density Service
 
 The Dynamic Population Density Service is a containerized REST API that provides population density estimates (people per km²) for a given geographic location expressed in latitude and longitude.
 
@@ -10,7 +10,7 @@ This project was developed as part of the ENAC – IATSED Master Program, in col
 
 ------------------------------------------------------
 
-Key Features: 
+## Key Features: 
 
 - REST API built with FastAPI
 - Population density extraction from GHS-POP raster datasets
@@ -20,7 +20,7 @@ Key Features:
 - Interactive API documentation via Swagger UI
 
 ------------------------------------------------------
-Architecture overview: 
+## Architecture overview: 
 
 Client
   ↓
@@ -36,7 +36,7 @@ JSON Response
 
 ------------------------------------------------------
 
-Technologies used : 
+## Technologies used : 
 
 - Python 3 (Main programming language used to implement the API logic, data processing and geospatial computations)
 
@@ -53,21 +53,20 @@ Technologies used :
 ------------------------------------------------------
 ------------------------------------------------------
 
+### Getting Started (Docker Recommended)
 
+## Prerequisites:
 
-Getting Started (Docker Recommended)
-
-Prerequisites:
 - Docker (Docker Desktop or Docker Engine)
 
 ------------------------------------------------------
-Build the Docker Image
+# Build the Docker Image
 From the project root directory:
 
 docker build -t population-density-api
 
 ------------------------------------------------------
-Run the Container:
+# Run the Container:
 
 docker run --rm -p 8000:8000 \
   -v "$(pwd)/data:/app/data" \
@@ -79,7 +78,7 @@ http://127.0.0.1:8000
 
 ------------------------------------------------------
 ------------------------------------------------------
-API Documentation
+### API Documentation
 
 Interactive API (Swagger)
 FastAPI automatically exposes an interactive documentation interface:
@@ -88,18 +87,19 @@ http://127.0.0.1:8000/docs
 
 ------------------------------------------------------
 ------------------------------------------------------
-API Usage
+
+### API Usage
 
 Endpoint: Get Population Density
 
-Request :
+## Request :
 GET /density?lat={latitude}&lon={longitude}
 
 Example:
 curl "http://127.0.0.1:8000/density?lat=43.6045&lon=1.444"
 
 
-Response:
+## Response:
 
 {
   "lat": 43.6045,
@@ -107,13 +107,13 @@ Response:
   "density": 9719.25
 }
 
-Returned value:
+## Returned value:
 Population density expressed in people per km².
 
 -----------------------------------------------------
 -----------------------------------------------------
 
-Dataset
+### Dataset
 
 The service uses population data from the Global Human Settlement Layer (GHS-POP), provided by the European Commission Joint Research Centre (JRC).
 
@@ -128,7 +128,7 @@ Detailed setup instructions are available in SETUP.md.
 
 ----------------------------------------------------
 ----------------------------------------------------
-Coordinate Reference Systems
+### Coordinate Reference Systems
 
 - API input: WGS84 (EPSG:4326 – latitude / longitude)
 - Dataset CRS: Mollweide projection (ESRI:54009)
@@ -136,7 +136,7 @@ Coordinate Reference Systems
 All coordinate transformations are handled internally using PyProj, ensuring correct axis order and spatial accuracy.
 
 ----------------------------------------------------
-Error Handling:
+### Error Handling:
 
 The API provides explicit HTTP error codes:
 
@@ -146,7 +146,7 @@ The API provides explicit HTTP error codes:
 - 503 Service Unavailable = Dataset not loaded or service initialization failure
 
 ----------------------------------------------------
-Testing
+### Testing
 
 A test suite is provided to validate API behavior and error handling.
 
@@ -159,14 +159,14 @@ pytest --cov=src --cov-report=html
 
 ----------------------------------------------------
 ----------------------------------------------------
-Limitations :
+### Limitations :
 
 - Static population dataset (single epoch)
 - No temporal population variation
 - No caching or performance optimization
 - Coverage limited to available dataset tiles
 
-Future Improvements:
+### Future Improvements:
 - Support for multiple population datasets
 - Time-dependent population modeling
 - Caching and performance optimization
@@ -174,7 +174,7 @@ Future Improvements:
 - Cloud-native deployment
 
 ------------------------------------------------------
-Authors:
+### Authors:
 
 Lou-Anne Gasp
 Japjot Singh
