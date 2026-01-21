@@ -18,17 +18,23 @@ This project was developed as part of the ENAC – IATSED Master Program, in col
 - Robust input validation and error handling
 - Fully Dockerized for reproducible deployment
 - Interactive API documentation via Swagger UI
+- Support for concurrent requests
+- Horizontally scalable architecture using Docker Compose
+- Load balancing via Nginx reverse proxy
 
 ------------------------------------------------------
 ## Architecture overview: 
 
+
 Client
   ↓
-FastAPI REST API
+Nginx Reverse Proxy (Load Balancer)
+  ↓
+Multiple FastAPI API instances (replicated containers)
   ↓
 Coordinate Transformation (WGS84 → Dataset CRS)
   ↓
-Raster Dataset (GHS-POP)
+Shared Raster Dataset (GHS-POP, mounted as volume)
   ↓
 Population Density Computation
   ↓
@@ -48,33 +54,49 @@ JSON Response
 
 - Docker (Used to containerize the application, ensuring reproducible deployment and simplified installation on any platform)
 
+- Docker Compose  
+  Used to orchestrate multiple API containers and enable horizontal scaling and load balancing.
+
+- Nginx  
+  Used as a reverse proxy and load balancer to distribute incoming requests across replicated API instances.
+
 - Pytest (Testing framework used to validate API behavior, error handling, and service robustness)
 
 ------------------------------------------------------
 ------------------------------------------------------
 
 ### Getting Started (Docker Recommended)
+## Scalable deployment with Docker Compose (recommended)
+
+This mode enables concurrent request handling and horizontal scaling using multiple FastAPI instances behind an Nginx reverse proxy.
 
 ## Prerequisites:
 
 - Docker (Docker Desktop or Docker Engine)
+- Docker Compose (included with Docker Desktop)
 
 ------------------------------------------------------
-# Build the Docker Image
+# Build the Services
 From the project root directory:
 
-docker build -t population-density-api
+docker compose build
 
 ------------------------------------------------------
-# Run the Container:
+# Run the application with multiple API replicas
 
-docker run --rm -p 8000:8000 \
-  -v "$(pwd)/data:/app/data" \
-  population-density-api
+docker compose up --scale api=4
 
-The API will be available at:
+The number of replicas can be adjusted depending on performance requirements.
 
-http://127.0.0.1:8000
+# The API will be available at:
+
+API root (via Nginx): http://localhost/
+
+Interactive API documentation (Swagger UI): http://localhost/docs
+
+# Stop the application:
+
+docker compose down
 
 ------------------------------------------------------
 ------------------------------------------------------
@@ -83,7 +105,7 @@ http://127.0.0.1:8000
 Interactive API (Swagger)
 FastAPI automatically exposes an interactive documentation interface:
 
-http://127.0.0.1:8000/docs
+http://localhost/docs
 
 ------------------------------------------------------
 ------------------------------------------------------
@@ -96,7 +118,9 @@ Endpoint: Get Population Density
 GET /density?lat={latitude}&lon={longitude}
 
 Example:
-curl "http://127.0.0.1:8000/density?lat=43.6045&lon=1.444"
+curl "http://localhost/density?lat=43.6045&lon=1.444"
+
+When using Docker Compose, the API is accessed via the Nginx entrypoint (port 80).
 
 
 ## Response:
