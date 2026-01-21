@@ -30,4 +30,5 @@ EXPOSE 8000
 ENV DATA_PATH=/app/data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif
 
 # Start FastAPI
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+

@@ -1,0 +1,24 @@
+# the goal of this file is to define and run a multi-container Docker application
+# It sets up two services: a FastAPI application and an Nginx server as a reverse proxy.
+# The FastAPI app serves on port 8000
+# while Nginx listens on port 80 and forwards requests to the FastAPI app.
+#port 80 because nginx default port is 80
+
+services:
+  api:
+    build: .
+    environment:
+      - DATA_PATH=/app/data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif
+    volumes:
+      - ./data:/app/data:ro
+    expose:
+      - "8000"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
