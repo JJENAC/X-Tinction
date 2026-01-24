@@ -9,11 +9,11 @@ Run tests:
     pytest tests/test_api_integration.py -v -s                 # With print output
 """
 
-import pytest
+import pytest 
 import time
 import os
 from fastapi.testclient import TestClient
-from main import app
+from src.main import app
 
 
 @pytest.fixture(scope="class")
@@ -30,7 +30,7 @@ class TestAPIIntegration:
     """Integration tests for API endpoints (TC20-TC27)."""
     
     def test_tc20_valid_api_request(self, client):
-        """TC20: Valid request returns density. Requirements: UR1, UR2, R2.4"""
+      
         response = client.get("/density?lat=43.6045&lon=1.444")
         
         assert response.status_code == 200
@@ -40,44 +40,36 @@ class TestAPIIntegration:
         assert data["density"] > 0
 
     def test_tc21_missing_latitude(self, client):
-        """TC21: Missing latitude rejected. Requirements: R1.8"""
+        
         response = client.get("/density?lon=1.444")
         assert response.status_code == 422
         assert "lat" in str(response.json()["detail"]).lower()
 
     def test_tc22_missing_longitude(self, client):
-        """TC22: Missing longitude rejected. Requirements: R1.8"""
+        
         response = client.get("/density?lat=43.6045")
         assert response.status_code == 422
         assert "lon" in str(response.json()["detail"]).lower()
 
     def test_tc23_invalid_latitude(self, client):
-        """TC23: Invalid latitude rejected. Requirements: R1.4, R1.8"""
+        
         response = client.get("/density?lat=91&lon=0")
         assert response.status_code == 422
 
     def test_tc24_invalid_longitude(self, client):
-        """TC24: Invalid longitude rejected. Requirements: R1.4, R1.8"""
+       
         response = client.get("/density?lat=0&lon=181")
         assert response.status_code == 422
 
     def test_tc25_out_of_bounds(self, client):
-        """TC25: Global dataset - test unpopulated area. Requirements: R5.9, R2.3"""
+       
         # Test South Pole (no population)
         response = client.get("/density?lat=-85&lon=0")
         assert response.status_code == 200
         assert response.json()["density"] == 0.0
 
     def test_tc26_service_initialization_verified(self, client):
-        """
-        TC26: Verify service initialization status.
-        Requirements: R7.4
         
-        Tests that service is properly initialized and operational.
-        The 503 error path exists in code (main.py lines 112-121) but cannot be
-        easily tested with mock due to module loading order. Manual verification
-        confirms 503 is returned when dataset file is missing.
-        """
         # Verify service is initialized and operational
         response = client.get("/health")
         assert response.status_code == 200
@@ -91,7 +83,7 @@ class TestAPIIntegration:
         assert density_response.status_code == 200  # Not 503!
 
     def test_tc27_health_endpoint(self, client):
-        """TC27: Health endpoint returns status. Requirements: R8.1"""
+       
         response = client.get("/health")
         assert response.status_code == 200
         data = response.json()
@@ -102,11 +94,11 @@ class TestAPIIntegration:
 
 
 class TestPerformance:
-    """Performance tests (TC28-TC29)."""
+   
     
     def test_tc28_response_time(self, client):
-        """TC28: Response time < 500ms. Requirements: R4.1, UR4"""
-        client.get("/density?lat=43.6045&lon=1.444")  # Warm-up
+        
+        client.get("/density?lat=43.6045&lon=1.444")  
         
         start = time.time()
         response = client.get("/density?lat=48.8566&lon=2.3522")
@@ -116,7 +108,7 @@ class TestPerformance:
         assert elapsed_ms < 500
 
     def test_tc29_startup_time(self):
-        """TC29: Startup < 15 minutes. Requirements: R3.2, UR3"""
+       
         from src.service.population_service import PopulationDensityService
         
         path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
@@ -133,17 +125,17 @@ class TestPerformance:
 
 
 class TestResponseFormat:
-    """Response format tests (TC30-TC32)."""
+    
     
     def test_tc30_unit_conversion(self, client):
-        """TC30: Density unit conversion. Requirements: R2.4, UR2"""
+        
         response = client.get("/density?lat=43.6045&lon=1.444")
         assert response.status_code == 200
         density = response.json()["density"]
         assert 100 < density < 50000  # Reasonable city density
 
     def test_tc31_response_fields(self, client):
-        """TC31: Response has required fields. Requirements: R8.2"""
+        
         response = client.get("/density?lat=48.8566&lon=2.3522")
         assert response.status_code == 200
         data = response.json()
@@ -152,7 +144,7 @@ class TestResponseFormat:
             assert isinstance(data[field], (int, float))
 
     def test_tc32_error_structure(self, client):
-        """TC32: Error response structure. Requirements: R1.8, R8.3"""
+        
         response = client.get("/density?lat=91&lon=0")
         assert response.status_code in [400, 422]
         data = response.json()

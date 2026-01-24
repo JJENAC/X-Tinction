@@ -122,14 +122,14 @@ async def get_density(
         description="Latitude in WGS84 (degrees)",
         ge=-90.0,
         le=90.0,
-        example=48.8566
+        examples =[48.8566]
     ),
     lon: float = Query(
         ...,
         description="Longitude in WGS84 (degrees)",
         ge=-180.0,
         le=180.0,
-        example=2.3522
+        examples = [2.3522]
     )
     ):
     """

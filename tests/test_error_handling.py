@@ -226,13 +226,43 @@ class TestEdgeCases:
     
     def test_zero_density(self):
         """Test area with zero population."""
-        # Should return 0.0, not raise an error
-        pass
+        from src.service.population_service import PopulationDensityService
+        import os
+        
+        dataset_path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+        
+        if not os.path.exists(dataset_path):
+            pytest.skip("Dataset file not available")
+        
+        service = PopulationDensityService(dataset_path)
+        service.start()
+        
+        try:
+            # Atlantic Ocean - no population
+            density = service.get_density(0.0, -30.0)
+            assert density == 0.0
+        finally:
+            service.stop()
     
     def test_nodata_value(self):
         """Test pixel with nodata value."""
-        # Should return 0.0, not raise an error
-        pass
+        from src.service.population_service import PopulationDensityService
+        import os
+        
+        dataset_path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+        
+        if not os.path.exists(dataset_path):
+            pytest.skip("Dataset file not available")
+        
+        service = PopulationDensityService(dataset_path)
+        service.start()
+        
+        try:
+            # Antarctica - nodata or zero
+            density = service.get_density(-80.0, 0.0)
+            assert density == 0.0
+        finally:
+            service.stop()
 
 
 if __name__ == "__main__":
