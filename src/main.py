@@ -21,9 +21,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Default path to the TIF file inside data folder
+# Using R4_C19 subset for Toulouse region
 DATA_PATH = os.getenv(
     "DATA_PATH",
-    "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+    "data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif"
 )
 
 

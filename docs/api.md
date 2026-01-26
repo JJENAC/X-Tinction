@@ -82,7 +82,7 @@ curl "http://127.0.0.1:8000/health"
 {
   "status": "healthy",
   "service_initialized": true,
-  "dataset_path": "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+  "dataset_path": "data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif"
 }
 
 -----------------------------------------------------------

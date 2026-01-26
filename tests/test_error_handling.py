@@ -229,7 +229,7 @@ class TestEdgeCases:
         from src.service.population_service import PopulationDensityService
         import os
         
-        dataset_path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+        dataset_path = "data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif"
         
         if not os.path.exists(dataset_path):
             pytest.skip("Dataset file not available")
@@ -249,7 +249,7 @@ class TestEdgeCases:
         from src.service.population_service import PopulationDensityService
         import os
         
-        dataset_path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
+        dataset_path = "data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif"
         
         if not os.path.exists(dataset_path):
             pytest.skip("Dataset file not available")
