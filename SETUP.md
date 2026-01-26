@@ -48,17 +48,17 @@ The project requires global population data from the **Global Human Settlement L
 3.  Select the **Global** coverage.
 4.  Choose the **Mollweide (ESRI:54009)** projection.
 5.  Choose the **100m** resolution.
-6.  Look for the **R4_C19** tile (Toulouse region) or **Epoch 2020** file.
-    - For Toulouse testing, use: `GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`
+6.  Look for the **R4_C19** tile (Toulouse region) or **Epoch 2030** file.
+  - For Toulouse testing, use: `GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`
     - This is a regional tile that covers the Toulouse area, much smaller than the global dataset.
     - If you download a different tile, update the path in `src/main.py`.
 
 7.  **Place the data**:
     - Create the directory `data/geographic_data/` if it doesn't exist.
-    - Move your downloaded file (e.g., `GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`) into `data/geographic_data/`.
+    - Move your downloaded file (e.g., `GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`) into `data/geographic_data/`.
 
 8.  **Configuration**:
-    - By default, the application looks for: `data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`.
+    - By default, the application looks for: `data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif`.
     - If your file has a different name, you can set the `DATA_PATH` environment variable when running, or rename the file.
 
 ## 5. Running the Application
@@ -99,7 +99,7 @@ curl "http://127.0.0.1:8000/health"
 {
   "status": "healthy",
   "service_initialized": true,
-  "dataset_path": "data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif",
+  "dataset_path": "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif",
   "dataset_crs": "ESRI:54009",
   "dataset_bounds": {
     "left": -18041000.0,

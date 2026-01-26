@@ -27,7 +27,7 @@ COPY . /app
 EXPOSE 8000
 
 # Default dataset path (can be overridden) - R4_C19 Toulouse region
-ENV DATA_PATH=/app/data/geographic_data/GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
+ENV DATA_PATH=/app/data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
 
 # Start FastAPI
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

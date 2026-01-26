@@ -146,7 +146,7 @@ Due to its size, the dataset is not included in the repository.
 Expected Dataset Location:
 
 data/geographic_data/
-└── GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
+└── GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
 
 Detailed setup instructions are available in SETUP.md.
 

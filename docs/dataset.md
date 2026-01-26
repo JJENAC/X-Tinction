@@ -44,7 +44,7 @@ CRS	ESRI:54009
 Data Type	Raster (GeoTIFF)
 Provider	European Commission – JRC
 File Used by the Service
-GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif (Toulouse region)
+GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif (Toulouse region)
 
 -------------------------------------------------------------
 ## 4. Spatial Characteristics
@@ -112,7 +112,7 @@ Due to its size, the dataset is not included in the Git repository.
 
 #### Expected Directory Structure
 data/geographic_data/
-└── GHS_POP_E2020_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
+└── GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
 
 #### Dataset Download
 
