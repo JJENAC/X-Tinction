@@ -111,7 +111,7 @@ class TestPerformance:
        
         from src.service.population_service import PopulationDensityService
         
-        path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif"
+        path = "data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0.tif"
         if not os.path.exists(path):
             pytest.skip("Dataset not found")
         
