@@ -3,7 +3,7 @@
 # Demo Documentation – Endpoints & Density Calculation
 This document describes the available API endpoints and explains how population
 density is computed.
-It complements the setup guide and focuses only on API usage and behavior.
+It complements the setup guide and focuses only on API usage and behavior. 
 
 
 ## Endpoints and density calculation
@@ -198,6 +198,23 @@ Example response:
 If the coordinate is outside the raster coverage, or if the raster cell contains
 a no-data value, the service returns a density of 0.0 (people/km²) instead of
 an HTTP error.
+
+-----------------------------------------------------------
+## Map demo script
+
+You can render a heatmap of densities over the Toulouse tile via the helper script:
+
+```bash
+# ensure the API is running locally (e.g., docker compose up)
+python dynamic_pop_density.py \
+   --api-url http://127.0.0.1:8000/density \
+   --lat-min 43.53 --lat-max 43.68 \
+   --lon-min 1.34 --lon-max 1.52 \
+   --step 0.005 \
+   --output outputs/density_toulouse.png
+```
+
+Defaults already target the Toulouse R4_C19 tile; adjust bounds or step to trade detail vs. speed.
 for example : http://127.0.0.1:8000/density?lat=90&lon=180
 Example behavior:
 Response status: 200 OK
