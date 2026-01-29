@@ -1,6 +1,9 @@
 venv/
 __pycache__/
 *.pyc
-data/
+data/*
+!data/geographic_data/
+data/geographic_data/*
+!data/geographic_data/GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R4_C19.tif
 .git/
 .gitignore
