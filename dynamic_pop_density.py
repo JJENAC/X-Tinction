@@ -72,7 +72,7 @@ def plot_density_map(lats, lons, density, title, output):
     plt.figure(figsize=(8, 6))
     plt.imshow(
         density,
-        extent=[lons.min(), lons.max(), lats.min(), lats.max()],
+        extent=(lons.min(), lons.max(), lats.min(), lats.max()),
         origin="lower",
         cmap="hot",
         aspect="auto",
@@ -89,15 +89,19 @@ def plot_density_map(lats, lons, density, title, output):
 
 def main():
     parser = argparse.ArgumentParser(description="Render population density from the API")
-    parser.add_argument("--api-url", default="http://localhost/density", help="Density endpoint URL")
-    parser.add_argument("--lat-min", type=float, default=48.78, help="Min latitude (WGS84)")
-    parser.add_argument("--lat-max", type=float, default=48.95, help="Max latitude (WGS84)")
-    parser.add_argument("--lon-min", type=float, default=2.25, help="Min longitude (WGS84)")
-    parser.add_argument("--lon-max", type=float, default=2.50, help="Max longitude (WGS84)")
+    parser.add_argument(
+        "--api-url",
+        default="https://population-density-population-density.apps.ocp4.innershift.sodigital.io/density",
+        help="Density endpoint URL",
+    )
+    parser.add_argument("--lat-min", type=float, default=43.56, help="Min latitude (WGS84)")
+    parser.add_argument("--lat-max", type=float, default=43.67, help="Max latitude (WGS84)")
+    parser.add_argument("--lon-min", type=float, default=1.37, help="Min longitude (WGS84)")
+    parser.add_argument("--lon-max", type=float, default=1.52, help="Max longitude (WGS84)")
     parser.add_argument("--step", type=float, default=0.001, help="Grid step in degrees (~0.001 ≈ 100 m)")
     parser.add_argument("--timeout", type=float, default=5.0, help="HTTP timeout seconds")
     parser.add_argument("--workers", type=int, default=6, help="Number of parallel workers")
-    parser.add_argument("--output", default="outputs/density_paris.png", help="Output image path")
+    parser.add_argument("--output", default="outputs/density_toulouse.png", help="Output image path")
 
     args = parser.parse_args()
 
@@ -118,7 +122,7 @@ def main():
     cells = round(((args.lat_max - args.lat_min) / args.step) * ((args.lon_max - args.lon_min) / args.step))
     print(f"Computed {cells} cells in {end - start:.2f} s ({cells / (end - start):.0f} cells/sec)")
 
-    out_path = plot_density_map(lats, lons, density, "Population density – Paris", args.output)
+    out_path = plot_density_map(lats, lons, density, "Population density – Toulouse", args.output)
     print(f"Saved map to {out_path}")
 
 
