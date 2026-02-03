@@ -29,7 +29,7 @@ def query_cell(api_url, lat, lon, timeout=5.0):
         return (lat, lon, 0.0)
 
 
-def build_density_map(api_url, lat_min, lat_max, lon_min, lon_max, step=0.001, timeout=5.0, max_workers=6, output_path=None):
+def build_density_map(api_url, lat_min, lat_max, lon_min, lon_max, step=0.002, timeout=5.0, max_workers=8, output_path=None):
     """Query the API on a lat/lon grid in parallel and return lats, lons, density matrix.
     
     If output_path is provided, saves intermediate progress images every 1000 cells.
@@ -59,8 +59,8 @@ def build_density_map(api_url, lat_min, lat_max, lon_min, lon_max, step=0.001, t
             if completed % 100 == 0:
                 print(f"  Progress: {completed}/{total_cells} cells")
             
-            # Save intermediate image every 1000 cells (overwrites same file for live updates)
-            if output_path and completed % 1000 == 0:
+            # Save intermediate image every 500 cells (overwrites same file for live updates)
+            if output_path and completed % 500 == 0:
                 plot_density_map(lats, lons, density, f"Progress: {completed}/{total_cells} cells", output_path)
                 print(f"  → Updated progress image: {output_path}")
 
@@ -98,9 +98,9 @@ def main():
     parser.add_argument("--lat-max", type=float, default=43.67, help="Max latitude (WGS84)")
     parser.add_argument("--lon-min", type=float, default=1.37, help="Min longitude (WGS84)")
     parser.add_argument("--lon-max", type=float, default=1.52, help="Max longitude (WGS84)")
-    parser.add_argument("--step", type=float, default=0.001, help="Grid step in degrees (~0.001 ≈ 100 m)")
+    parser.add_argument("--step", type=float, default=0.002, help="Grid step in degrees (~0.001 ≈ 100 m)")
     parser.add_argument("--timeout", type=float, default=5.0, help="HTTP timeout seconds")
-    parser.add_argument("--workers", type=int, default=6, help="Number of parallel workers")
+    parser.add_argument("--workers", type=int, default=8, help="Number of parallel workers")
     parser.add_argument("--output", default="outputs/density_toulouse.png", help="Output image path")
 
     args = parser.parse_args()
